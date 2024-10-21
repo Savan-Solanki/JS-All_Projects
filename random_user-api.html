@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="card">
+        <img src="" alt="" id="user-img">
+        <h3>Name : <span id="title"></span><span id="first"></span><span id="last"></span></h3>
+        <h3>Gender : <span id="gender"></span></h3>
+        <h3>Email : <span id="email"></span></h3>
+        <h3>Phone : <span id="phone"></span></h3>
+    </div>
+    <button id="btn">change Data</button>
+</body>
+
+</html>
+<script>
+    document.getElementById("btn").addEventListener("click", () => {
+        fetch("https://randomuser.me/api/")
+            .then((res) => res.json())
+            .then((data) => {
+                let user = data.results[0]
+                document.getElementById("title").innerHTML = user.name.title
+                document.getElementById("first").innerHTML = user.name.first
+                document.getElementById("last").innerHTML = user.name.last
+                document.getElementById("gender").innerHTML = user.gender
+                document.getElementById("email").innerHTML = user.email
+                document.getElementById("phone").innerHTML = user.phone
+                let img = document.getElementById("user-img")
+                img.src = user.picture.large
+            })
+            .catch((err) => console.log(err))
+    })
+
+</script>
