@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <h1>Weather Data</h1>
+    <h3>City : <span id="city"></span></h3>
+    <h3>Country : <span id="country"></span></h3>
+    <h3>TimeZone : <span id="tz_id"></span></h3>
+    <h3>TempC : <span id="temp_c"></span></h3>
+    <h3><img src="" id="img" alt=""></h3>
+
+    <button id="btn">Show Data</button>
+</body>
+
+</html>
+<script>
+    document.getElementById("btn").addEventListener("click", () => {
+
+
+        fetch("http://api.weatherapi.com/v1/current.json?key=8f1c8aa9f31f48cda1b70210242110&q=india&aqi=no")
+            .then((res) => res.json())
+            .then((data) => {
+                document.getElementById("city").innerHTML = data.location.name
+                document.getElementById("country").innerHTML = data.location.country
+                document.getElementById("tz_id").innerHTML = data.location.tz_id
+                document.getElementById("temp_c").innerHTML = data.current.temp_c
+                let img = document.getElementById("img")
+                img.src = data.current.condition.icon
+            })
+            .catch((err) => console.log(err))
+    })
+</script>
