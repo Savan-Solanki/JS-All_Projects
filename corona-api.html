@@ -1,0 +1,41 @@
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>COVID-19 Data</title>
+</head>
+
+<body>
+    <h1>Corona Data</h1>
+    <div id="data-container"></div>
+    <button id="btn">Show Data</button>
+
+    <script>
+        document.getElementById("btn").addEventListener("click", () => {
+            fetch('https://api.rootnet.in/covid19-in/stats/latest')
+                .then(res => res.json())
+                .then((data) => {
+                    const regions = data.data.regional
+                    const dataContainer = document.getElementById("data-container");
+                    const regionElements = regions.map((region) => {
+                        return `  
+                            <div class="region">  
+                            <h3>Location: ${region.loc}</h3>  
+                            <p>Confirmed Cases Indian: ${region.confirmedCasesIndian}</p>  
+                            <p>Confirmed Cases Foreign: ${region.confirmedCasesForeign}</p>  
+                            <p>Discharged: ${region.discharged}</p>  
+                            <p>Deaths: ${region.deaths}</p>  
+                            <p>Total Confirmed: ${region.totalConfirmed}</p>  
+                            </div>  
+                        `
+                    })
+
+                    dataContainer.innerHTML = regionElements
+                })
+                .catch((err) => console.log(err))
+        });
+    </script>
+</body>
+
+</html>
